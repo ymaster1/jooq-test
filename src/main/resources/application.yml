@@ -1,0 +1,8 @@
+spring:
+  jooq:
+    sql-dialect: mysql
+  datasource:
+    url: jdbc:mysql://rm-2ze12jetnb7rf604n9o.mysql.rds.aliyuncs.com:3306/study?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    password: Ym19961208
+    username: rds_ymaster1
+    driver-class-name: com.mysql.cj.jdbc.Driver

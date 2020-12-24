@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.ym</groupId>
+    <artifactId>jooq-test</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>jooq-test</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <kotlin.version>1.4.20</kotlin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- jooq相关包 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+
+        <!-- mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.jooq</groupId>-->
+            <!--                <artifactId>jooq-codegen-maven</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>default</id>-->
+            <!--                        <phase>generate-sources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>generate</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <jdbc>-->
+            <!--                                <driver>com.mysql.jdbc.Driver</driver>-->
+            <!--                                <url>jdbc:mysql://127.0.0.1:3306</url>-->
+            <!--                                <user>root</user>-->
+            <!--                                <password><![CDATA[123456]]></password>-->
+            <!--                            </jdbc>-->
+            <!--                            <generator>-->
+            <!--                                &lt;!&ndash;选择java代码生成器&ndash;&gt;-->
+            <!--                                <name>org.jooq.util.JavaGenerator</name>-->
+            <!--                                <generate>-->
+            <!--                                    <instanceFields>true</instanceFields>-->
+            <!--                                    <pojos>true</pojos>-->
+            <!--                                    &lt;!&ndash; 不要dao接口，生成的太简单了&ndash;&gt;-->
+            <!--                                    <daos>false</daos>-->
+            <!--                                </generate>-->
+            <!--                                <database>-->
+            <!--                                    &lt;!&ndash;  数据库名&ndash;&gt;-->
+            <!--                                    <inputSchema>study</inputSchema>-->
+            <!--                                    &lt;!&ndash;  数据库类型: mysql&ndash;&gt;-->
+            <!--                                    <name>org.jooq.util.mysql.MySQLDatabase</name>-->
+            <!--                                    &lt;!&ndash; .*表示生成所有表&ndash;&gt;-->
+            <!--                                    <includes>.*</includes>-->
+            <!--                                    &lt;!&ndash;  不生成某些表&ndash;&gt;-->
+            <!--                                    <excludes/>-->
+            <!--                                </database>-->
+            <!--                                <target>-->
+            <!--                                    <packageName>com.ym.jooqtest.joop</packageName>-->
+            <!--                                    &lt;!&ndash; 生成的代码存放路径&ndash;&gt;-->
+            <!--                                    <directory>target/generated-sources/jooq</directory>-->
+            <!--                                </target>-->
+            <!--                            </generator>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+
+            <!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <!--  版本不能省略，会报错-->
+                        <version>${mysql.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!--逆向生成配置文件-->
+                    <configurationFile>src/main/resources/library.xml</configurationFile>
+                    <generator>
+                        <generate>
+                            <pojos>true</pojos>
+                            <fluentSetters>true</fluentSetters>
+                        </generate>
+                    </generator>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
+
+
+
