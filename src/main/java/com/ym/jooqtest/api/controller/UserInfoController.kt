@@ -19,4 +19,8 @@ class UserInfoController : UserInfoApi {
     override fun getAll(): MutableList<UserInfo> {
         return userInfoService.all
     }
+
+    override fun getById(id: Long): UserInfo {
+        return userInfoService.getById(id)
+    }
 }

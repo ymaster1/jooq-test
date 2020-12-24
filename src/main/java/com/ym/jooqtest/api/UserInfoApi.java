@@ -2,6 +2,7 @@ package com.ym.jooqtest.api;
 
 import com.ym.jooqtest.generated.tables.pojos.UserInfo;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -19,4 +20,12 @@ public interface UserInfoApi {
      */
     @GetMapping("/getall")
     List<UserInfo> getAll();
+
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
+    @GetMapping("/getById/{id}")
+    UserInfo getById(@PathVariable("id") Long id);
 }

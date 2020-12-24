@@ -45,6 +45,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         return list3;
     }
 
+    @Override
+    public UserInfo getById(Long id) {
+        Record record = dslContext.select().from(Tables.USER_INFO).where(Tables.USER_INFO.ID.eq(id)).fetchOne();
+        UserInfo into = record.into(UserInfo.class);
+//        或者直接一步，使用fetchOneInto
+        UserInfo info = dslContext.select().from(Tables.USER_INFO).where(Tables.USER_INFO.ID.eq(id)).fetchOneInto(UserInfo.class);
+        return info;
+    }
+
     /**
      * 直接通过Result<Record>获取值，需要在每次获取的时候指定表名称和字段名
      *
@@ -65,6 +74,9 @@ public class UserInfoServiceImpl implements UserInfoService {
             info.setId(e.get(Tables.USER_INFO.ID));
             info.setConcatPhone(e.get(Tables.USER_INFO.CONCAT_PHONE));
             info.setCountry(e.get(Tables.USER_INFO.COUNTRY));
+//            可以直接into更快
+//            UserInfo into = e.into(UserInfo.class);
+
             list.add(info);
         });
         return list;
@@ -73,7 +85,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     /**
      * Result 的into方法可以将默认的Record转换为更精确的表Record
      * 通过Result<UserInfoRecord> 获取值，不需要多次指定表名
-     *
+     * <p>
      * Record 也有into方法，是一样的，不过没必要
      * UserInfoRecord into = e.into(Tables.USER_INFO);
      *
@@ -100,10 +112,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     /**
      * fetchInto方法可以可以传入任意class类型，或者表常量
      * 会直接返回任意class类型的List集合，或者指定表Record的结果集对象
+     *
      * @param from
      * @return
      */
-    private List<UserInfo> getListByAnyRecord(SelectJoinStep<Record> from){
+    private List<UserInfo> getListByAnyRecord(SelectJoinStep<Record> from) {
 //        返回指定表的Record结果集对象
         Result<UserInfoRecord> userInfoRecords = from.fetchInto(Tables.USER_INFO);
 //        返回指定类型的List

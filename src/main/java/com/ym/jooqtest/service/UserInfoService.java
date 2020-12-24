@@ -15,4 +15,11 @@ public interface UserInfoService {
      * @return
      */
     List<UserInfo> getAll();
+
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
+    UserInfo getById(Long id);
 }
