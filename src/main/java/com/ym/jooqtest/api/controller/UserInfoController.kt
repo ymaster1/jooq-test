@@ -20,6 +20,14 @@ class UserInfoController : UserInfoApi {
         return userInfoService.all
     }
 
+    override fun create(info: UserInfo?) {
+        userInfoService.create(info)
+    }
+
+    override fun update(info: UserInfo?) {
+        userInfoService.update(info)
+    }
+
     override fun getById(id: Long): UserInfo {
         return userInfoService.getById(id)
     }

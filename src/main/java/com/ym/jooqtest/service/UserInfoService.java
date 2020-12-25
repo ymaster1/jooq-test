@@ -22,4 +22,26 @@ public interface UserInfoService {
      * @return
      */
     UserInfo getById(Long id);
+
+    /**
+     * 新增
+     * @param userInfo
+     * @return
+     */
+    void create(UserInfo userInfo);
+
+    /**
+     * 更新
+     * 暂时还没有对null字段做处理，后续会补上
+     * @param userInfo
+     * @return
+     */
+    void update(UserInfo userInfo);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    int delete(Long id);
 }
