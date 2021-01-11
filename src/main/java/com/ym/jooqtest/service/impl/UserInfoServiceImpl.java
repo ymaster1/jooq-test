@@ -22,7 +22,8 @@ import java.util.Map;
  * @Description:
  */
 @Service
-public class UserInfoServiceImpl implements UserInfoService {
+public class
+UserInfoServiceImpl implements UserInfoService {
     @Autowired
     DSLContext dslContext;
 
