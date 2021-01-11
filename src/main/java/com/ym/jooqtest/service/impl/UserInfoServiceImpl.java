@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ymaster1
@@ -49,6 +50,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getById(Long id) {
         Record record = dslContext.select().from(Tables.USER_INFO).where(Tables.USER_INFO.ID.eq(id)).fetchOne();
+//        可以将结果集转化为map
+        Map<String, Object> stringObjectMap = dslContext.select().from(Tables.USER_INFO).where(Tables.USER_INFO.ID.eq(id)).fetchOneMap();
+
         UserInfo into = record.into(UserInfo.class);
 //        或者直接一步，使用fetchOneInto
         UserInfo info = dslContext.select().from(Tables.USER_INFO).where(Tables.USER_INFO.ID.eq(id)).fetchOneInto(UserInfo.class);
@@ -80,6 +84,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
             list.add(info);
         });
+
         return list;
     }
 
@@ -96,6 +101,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<UserInfo> list = new ArrayList<>();
         Result<UserInfoRecord> into = fetch.into(Tables.USER_INFO);
         into.forEach(e -> {
+//           可以直接转化为map
+            System.out.println(e.intoMap());
             UserInfo info = new UserInfo();
             info.setUserName(e.getUserName());
 
@@ -124,6 +131,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<UserInfoRecord> userInfoRecords1 = from.fetchInto(UserInfoRecord.class);
 //        返回指定类型list
         List<UserInfo> list = from.fetchInto(UserInfo.class);
+//        可以直接转化为map
+        List<Map<String, Object>> maps = from.fetchMaps();
         return list;
 
     }
